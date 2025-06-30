@@ -7,8 +7,8 @@
  * that occur during the build process with Bootstrap 5.
  */
 
-const { spawn } = require('child_process');
-const path = require('path');
+import { spawn } from 'child_process';
+import path from 'path';
 
 // ANSI color codes for terminal output
 const colors = {
@@ -75,7 +75,7 @@ function runBuild(isDev = false) {
     printHeader();
     printWarningNotice();
 
-    const command = isDev ? 'dev' : 'build';
+    const command = isDev ? 'dev:raw' : 'build:raw';
     console.log(`${colors.green}🔨 Running: npm run ${command}${colors.reset}\n`);
 
     const child = spawn('npm', ['run', command], {
