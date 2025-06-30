@@ -1,0 +1,80 @@
+name: Sync Documentation to Wiki
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Checkout wiki
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ github.repository }}.wiki
+        path: wiki
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Sync documentation
+      run: |
+        cd wiki
+
+        # Create Home page
+        cat > Home.md << 'EOF'
+        # BS5 Starter Kit Wiki
+
+        Welcome to the **BS5 Starter Kit** community wiki! This is your hub for tutorials, examples, and community-driven content.
+
+        ## 📚 Quick Links
+
+        - **[Installation Guide](Installation)** - Get started quickly
+        - **[Configuration](Configuration)** - Customize your setup
+        - **[Usage Examples](Usage-Examples)** - Code examples and patterns
+        - **[Customization](Customization)** - Extend and modify components
+        - **[Troubleshooting](Troubleshooting)** - Common issues and solutions
+
+        ## 🎯 Repository Documentation
+
+        For the most up-to-date technical documentation, always refer to the [repository docs](https://github.com/${{ github.repository }}/tree/main/docs).
+
+        ## 🚀 Quick Start
+
+        ```bash
+        composer require get-tony/bs5-starter-kit
+        php artisan bs5:install --preset=full
+        npm install && npm run build
+        ```
+
+        ## 💡 Community Contributions
+
+        This wiki is community-driven! Feel free to:
+        - Add usage examples
+        - Share customization tips
+        - Document best practices
+        - Create tutorials with screenshots
+
+        ---
+
+        **Latest Package Version**: [Check Packagist](https://packagist.org/packages/get-tony/bs5-starter-kit)
+        EOF
+
+        # Copy documentation files
+        cp ../docs/installation.md Installation.md
+        cp ../docs/configuration.md Configuration.md
+        cp ../docs/usage-examples.md Usage-Examples.md
+        cp ../docs/customization.md Customization.md
+        cp ../docs/troubleshooting.md Troubleshooting.md
+
+    - name: Commit and push wiki changes
+      run: |
+        cd wiki
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git diff --staged --quiet || git commit -m "Sync documentation from release ${{ github.event.release.tag_name }}"
+        git push

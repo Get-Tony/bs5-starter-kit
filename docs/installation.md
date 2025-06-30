@@ -67,8 +67,12 @@ Use Laravel's standard publishing system:
 php artisan vendor:publish --tag=bs5-kit-sass      # SASS architecture only
 php artisan vendor:publish --tag=bs5-kit-auth      # Authentication views only
 php artisan vendor:publish --tag=bs5-kit-layouts   # Layout templates only
+php artisan vendor:publish --tag=bs5-kit-components # Blade components only
+php artisan vendor:publish --tag=bs5-kit-pages     # Example pages only
 php artisan vendor:publish --tag=bs5-kit-js        # JavaScript files only
+php artisan vendor:publish --tag=bs5-kit-vite      # Vite configuration only
 php artisan vendor:publish --tag=bs5-kit-config    # Configuration only
+php artisan vendor:publish --tag=bs5-kit-stubs     # All stub files for development
 
 # Publish everything
 php artisan vendor:publish --provider="LaravelBs5Kit\Bs5KitServiceProvider"
@@ -78,7 +82,7 @@ php artisan vendor:publish --provider="LaravelBs5Kit\Bs5KitServiceProvider"
 
 ### System Requirements
 
-- **Laravel 10+ or 12+**
+- **Laravel 10+ | 11+ | 12+**
 - **PHP 8.2+**
 - **Node.js 18+** and **NPM**
 - **Composer 2.0+**

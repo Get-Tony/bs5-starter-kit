@@ -11,7 +11,7 @@ Welcome to the comprehensive documentation for **BS5 Starter Kit** - a pure Boot
 ### ⚙️ For Developers
 - **[Configuration](configuration.md)** - Customize settings and behavior
 - **[Customization](customization.md)** - Extend and modify components
-- **[Testing](testing.md)** - Quality assurance and testing guides
+- **[Troubleshooting](troubleshooting.md)** - Quality assurance and troubleshooting guides
 
 ### 🔧 For Advanced Users
 - **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
@@ -48,10 +48,10 @@ BS5 Starter Kit is a modern, production-ready Laravel starter kit built exclusiv
 - **Best practices** and coding patterns
 
 ### Quality Assurance
-- **Testing guidelines** and test suite usage
+- **Troubleshooting** common issues and solutions
 - **Quality standards** and code validation
-- **Troubleshooting** common issues
 - **Performance** optimization tips
+- **Test suite** usage and debugging
 
 ## 🚀 Quick Start
 

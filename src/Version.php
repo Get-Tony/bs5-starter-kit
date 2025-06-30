@@ -15,7 +15,7 @@ class Version
     /**
      * The release date.
      */
-    public const RELEASE_DATE = '2024-01-15';
+    public const RELEASE_DATE = '2025-01-15';
 
     /**
      * Get the current version.

@@ -16,6 +16,7 @@ class PublishCommand extends Command
                             {--config : Publish configuration file}
                             {--stubs : Publish stub files for customization}
                             {--components : Publish example components}
+                            {--all : Publish all resources}
                             {--list : List all available vendor:publish options}
                             {--force : Overwrite existing files}';
 

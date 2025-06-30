@@ -5,7 +5,7 @@ All notable changes to BS5 Starter Kit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2024-01-15
+## [1.0.0] - 2025-01-15
 
 ### Added
 - 🎉 **Initial Release** - Pure Bootstrap 5 starter kit for Laravel
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Enterprise Ready** - Professional components and layouts
 - **Zero Dependencies** - Clean foundation you can build upon
 - **Production Tested** - Optimized for real-world applications
-- **Laravel 10+ & 12+ Support** - Compatible with latest Laravel versions
+- **Laravel 10+, 11+ & 12+ Support** - Compatible with latest Laravel versions
 - **PHP 8.2+ Support** - Modern PHP features and performance
 
 ### Components Included

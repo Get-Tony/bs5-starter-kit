@@ -420,8 +420,8 @@ test_installation() {
 
     # Test individual component installations
     print_info "Testing individual component installations..."
-    if php artisan bs5:install --bootstrap --alpine --no-interaction >/dev/null 2>&1; then
-        record_test_pass "Laravel Integration - Individual components (Bootstrap + Alpine)"
+    if php artisan bs5:install --bootstrap --sass --no-interaction >/dev/null 2>&1; then
+        record_test_pass "Laravel Integration - Individual components (Bootstrap + SASS)"
     else
         record_test_warning "Individual components installation had issues"
     fi
@@ -505,6 +505,21 @@ test_laravel_functionality() {
 
     # Return to original directory
     cd "$original_dir"
+}
+
+# Setup test workspace
+setup_test_workspace() {
+    print_info "Setting up test workspace..."
+
+    # Remove existing workspace if it exists
+    if [ -d "$TEST_WORKSPACE_DIR" ]; then
+        rm -rf "$TEST_WORKSPACE_DIR"
+    fi
+
+    # Create new workspace directory
+    mkdir -p "$TEST_WORKSPACE_DIR"
+
+    print_verbose "Test workspace created at: $TEST_WORKSPACE_DIR"
 }
 
 # Cleanup test environment

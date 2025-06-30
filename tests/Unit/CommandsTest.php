@@ -25,8 +25,6 @@ class CommandsTest extends TestCase
 
         $this->assertTrue($definition->hasOption('preset'));
         $this->assertTrue($definition->hasOption('bootstrap'));
-        $this->assertTrue($definition->hasOption('alpine'));
-        $this->assertTrue($definition->hasOption('livewire'));
         $this->assertTrue($definition->hasOption('sass'));
         $this->assertTrue($definition->hasOption('auth'));
         $this->assertTrue($definition->hasOption('force'));

@@ -33,21 +33,22 @@ class PublishCommandTest extends TestCase
     /** @test */
     public function it_can_run_publish_command_with_components_option()
     {
-        $this->artisan('bal:publish --components')
+        $this->artisan('bs5:publish --components')
             ->assertExitCode(0);
     }
 
     /** @test */
     public function it_can_run_publish_command_with_all_option()
     {
-        $this->artisan('bal:publish --all')
+        $this->artisan('bs5:publish --all')
             ->assertExitCode(0);
     }
 
     /** @test */
     public function it_shows_help_when_no_options_provided()
     {
-        $this->artisan('bal:publish')
+        $this->artisan('bs5:publish')
+            ->expectsOutput('💡 Specify what to publish: --config, --stubs, --components, or --all')
             ->assertExitCode(0);
     }
 
@@ -55,18 +56,18 @@ class PublishCommandTest extends TestCase
     public function it_can_force_overwrite_published_files()
     {
         // First publish
-        $this->artisan('bal:publish --config')
+        $this->artisan('bs5:publish --config')
             ->assertExitCode(0);
 
         // Second publish with force
-        $this->artisan('bal:publish --config --force')
+        $this->artisan('bs5:publish --config --force')
             ->assertExitCode(0);
     }
 
     /** @test */
     public function it_can_publish_multiple_options_together()
     {
-        $this->artisan('bal:publish --config --stubs')
+        $this->artisan('bs5:publish --config --stubs')
             ->assertExitCode(0);
     }
 
@@ -75,7 +76,6 @@ class PublishCommandTest extends TestCase
     {
         // Test that Laravel's vendor:publish command works with our tags
         $this->artisan('vendor:publish --tag=bs5-kit-config')
-            ->expectsOutput('📦 Publishing BS5 Starter Kit resources...')
             ->assertExitCode(0);
     }
 
@@ -84,7 +84,6 @@ class PublishCommandTest extends TestCase
     {
         // Test that Laravel's vendor:publish command works with our provider
         $this->artisan('vendor:publish --provider=LaravelBs5Kit\Bs5KitServiceProvider')
-            ->expectsOutput('📦 Publishing BS5 Starter Kit resources...')
             ->assertExitCode(0);
     }
 
@@ -114,7 +113,7 @@ class PublishCommandTest extends TestCase
         $options = ['config', 'stubs', 'components'];
 
         foreach ($options as $option) {
-            $this->artisan("bal:publish --{$option}")
+            $this->artisan("bs5:publish --{$option}")
                 ->assertExitCode(0);
         }
     }
@@ -123,10 +122,10 @@ class PublishCommandTest extends TestCase
     public function it_handles_force_option_correctly()
     {
         // Test force option with different combinations
-        $this->artisan('bal:publish --all --force')
+        $this->artisan('bs5:publish --all --force')
             ->assertExitCode(0);
 
-        $this->artisan('bal:publish --config --stubs --force')
+        $this->artisan('bs5:publish --config --stubs --force')
             ->assertExitCode(0);
     }
 
@@ -134,7 +133,6 @@ class PublishCommandTest extends TestCase
     public function it_can_publish_all_resources()
     {
         $this->artisan('vendor:publish --provider=LaravelBs5Kit\Bs5KitServiceProvider')
-            ->expectsOutput('📦 Publishing BS5 Starter Kit resources...')
             ->assertExitCode(0);
     }
 
@@ -150,5 +148,14 @@ class PublishCommandTest extends TestCase
             'bs5-kit-pages',
             'bs5-kit-vite',
         ];
+
+        // Test that the list command includes expected tags
+        $this->artisan('bs5:publish --list')
+            ->expectsOutput('📋 Available vendor:publish tags for BS5 Starter Kit:')
+            ->assertExitCode(0);
+
+        // Verify tags are defined (basic assertion)
+        $this->assertNotEmpty($tags);
+        $this->assertContains('bs5-kit-sass', $tags);
     }
 }

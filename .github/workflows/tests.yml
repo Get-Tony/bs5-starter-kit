@@ -1,4 +1,4 @@
-name: Tests
+name: Integration Tests
 
 on:
   push:
@@ -7,55 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: true
-      matrix:
-        php: [ 8.2, 8.3, 8.4 ]
-        laravel: [ 10.*, 11.*, 12.* ]
-        dependency-version: [ prefer-lowest, prefer-stable ]
-        include:
-        - laravel: 10.*
-          testbench: 8.*
-        - laravel: 11.*
-          testbench: 9.*
-        - laravel: 12.*
-          testbench: 10.*
-
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php }}
-        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
-        coverage: none
-
-    - name: Setup problem matchers
-      run: |
-        echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-        echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
-    - name: Install BS5 Starter Kit
-      run: |
-        composer init --name=test/project --require="laravel/framework:${{ matrix.laravel }}" --require="orchestra/testbench:${{ matrix.testbench }}" --stability=dev --no-interaction
-        composer config minimum-stability dev
-        composer require get-tony/bs5-starter-kit:@dev --no-interaction
-
-    - name: Test BS5 Starter Kit Installation
-      run: |
-        vendor/bin/testbench bs5:install --preset=minimal --no-interaction
-        vendor/bin/testbench bs5:install --preset=standard --no-interaction
-
-    - name: Execute tests
-      run: vendor/bin/phpunit --verbose
-
   integration-test:
     runs-on: ubuntu-latest
     name: Integration Test
