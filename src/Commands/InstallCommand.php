@@ -537,6 +537,8 @@ class InstallCommand extends Command
         $this->call('config:clear');
         $this->call('package:discover');
 
+        $breezeInstalled = false;
+
         // Install Breeze with Blade (we'll modify for Bootstrap)
         try {
             $this->info('🎨 Setting up Breeze authentication...');
@@ -550,6 +552,7 @@ class InstallCommand extends Command
             }
 
             $this->call('breeze:install', ['stack' => 'blade', '--no-interaction' => true]);
+            $breezeInstalled = true;
 
             $this->info('🔄 Replacing Tailwind with Bootstrap...');
             // Remove Tailwind and install Bootstrap
@@ -584,6 +587,7 @@ class InstallCommand extends Command
             $this->warn('BS5 Kit will continue with its own authentication system.');
             $this->comment('Note: Do not run "php artisan breeze:install" manually as it conflicts with BS5 Kit\'s SASS setup.');
             $this->comment('If you need authentication, BS5 Kit provides its own complete authentication system.');
+            $breezeInstalled = false;
         }
 
         // ALWAYS install BS5 Kit components regardless of Breeze success/failure
@@ -609,6 +613,16 @@ class InstallCommand extends Command
         // CRITICAL: Install BS5 Kit Bootstrap components LAST to override Breeze Tailwind components
         $this->info('🔄 Installing BS5 Kit Bootstrap components (overriding Breeze Tailwind)...');
         $this->installBootstrapComponents();
+
+        // CRITICAL: If Breeze didn't install properly, add our own working routes
+        if (!$breezeInstalled) {
+            $this->info('🔄 Adding working authentication routes (Breeze fallback)...');
+            $this->addAuthRoutes();
+
+            // Create dashboard and profile views
+            $this->copyStub('pages/dashboard.blade.php', resource_path('views/dashboard.blade.php'));
+            $this->copyStub('pages/profile.blade.php', resource_path('views/profile.blade.php'));
+        }
 
         $this->info('✅ Complete authentication system installed');
     }
@@ -637,26 +651,111 @@ class InstallCommand extends Command
             return;
         }
 
+        // Get existing content
+        $existingContent = $this->files->get($routesPath);
+
+        // Check if auth routes already exist
+        if (strpos($existingContent, 'Authentication Routes') !== false ||
+            strpos($existingContent, "Route::get('login'") !== false ||
+            strpos($existingContent, "Route::get('register'") !== false) {
+            $this->info('✅ Authentication routes already exist in web.php');
+            return;
+        }
+
         $routes = "
-// Basic Authentication Routes Template
-// For full authentication, we recommend using Laravel Breeze:
-//   composer require laravel/breeze --dev
-//   php artisan breeze:install blade
-//
-// Or add custom authentication routes here:
-// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-// Route::post('/login', [LoginController::class, 'login']);
-// Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-// Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-// Route::post('/register', [RegisterController::class, 'register']);
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use App\Models\User;
+
+// Authentication Routes (BS5 Starter Kit)
+Route::middleware('guest')->group(function () {
+    Route::get('register', function () {
+        return view('auth.register');
+    })->name('register');
+
+    Route::post('register', function (Request \$request) {
+        \$request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        \$user = User::create([
+            'name' => \$request->name,
+            'email' => \$request->email,
+            'password' => Hash::make(\$request->password),
+        ]);
+
+        Auth::login(\$user);
+
+        return redirect('/dashboard');
+    });
+
+    Route::get('login', function () {
+        return view('auth.login');
+    })->name('login');
+
+    Route::post('login', function (Request \$request) {
+        \$credentials = \$request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt(\$credentials, \$request->boolean('remember'))) {
+            \$request->session()->regenerate();
+            return redirect()->intended('/dashboard');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    });
+
+    Route::get('forgot-password', function () {
+        return view('auth.forgot-password');
+    })->name('password.request');
+
+    Route::get('reset-password/{token}', function (string \$token) {
+        return view('auth.reset-password', ['token' => \$token]);
+    })->name('password.reset');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/profile', function () {
+        return view('profile');
+    })->name('profile.edit');
+
+    Route::post('logout', function (Request \$request) {
+        Auth::logout();
+        \$request->session()->invalidate();
+        \$request->session()->regenerateToken();
+        return redirect('/');
+    })->name('logout');
+});
 ";
 
-        $this->files->append($routesPath, $routes);
+        // Check if we need to add use statements at the top
+        if (strpos($existingContent, 'use Illuminate\Http\Request;') === false) {
+            // Find the opening <?php tag and add imports after it
+            $existingContent = str_replace(
+                "<?php\n\nuse Illuminate\Support\Facades\Route;",
+                "<?php\n\nuse Illuminate\Support\Facades\Route;\nuse Illuminate\Http\Request;\nuse Illuminate\Support\Facades\Auth;\nuse Illuminate\Support\Facades\Hash;\nuse Illuminate\Validation\Rules;\nuse App\Models\User;",
+                $existingContent
+            );
+        }
 
-        $this->info('💡 Authentication routes template added to routes/web.php');
-        $this->info('📖 For full authentication, use BS5 Kit with --preset=full:');
-        $this->line('   php artisan bs5:install --preset=full');
-        $this->comment('Note: Do not use "php artisan breeze:install" directly as it conflicts with BS5 Kit\'s SASS setup.');
+        // Append the routes
+        $this->files->put($routesPath, $existingContent . $routes);
+
+        $this->info('✅ Complete authentication routes added to web.php');
+        $this->info('🎯 Login and Register links will now appear in navigation');
+        $this->comment('Note: Dashboard and profile views will be created automatically');
     }
 
     /**
