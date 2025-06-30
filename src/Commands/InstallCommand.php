@@ -507,124 +507,44 @@ class InstallCommand extends Command
         $this->comment('BS5 Kit provides complete authentication with Bootstrap styling.');
         $this->newLine();
 
-        // Always install Breeze for complete functionality, but make it transparent
-        $this->comment('Installing Laravel Breeze with Bootstrap styling...');
-        $this->installBreezeAuth();
+        // Use BS5 Kit's own reliable authentication system (no Breeze dependency)
+        $this->installBS5KitAuth();
 
         $this->info('✅ Complete authentication system installed');
     }
 
     /**
-     * Install Breeze-based authentication.
+     * Install BS5 Kit's own authentication system (no external dependencies).
      */
-    protected function installBreezeAuth(): void
+    protected function installBS5KitAuth(): void
     {
-        // Check if Breeze is already installed
-        if ($this->files->exists(base_path('composer.json'))) {
-            $composerJson = json_decode($this->files->get(base_path('composer.json')), true);
-            $hasBreeze = isset($composerJson['require-dev']['laravel/breeze']) ||
-                        isset($composerJson['require']['laravel/breeze']);
-
-            if (! $hasBreeze) {
-                $this->info('📦 Installing Laravel Breeze...');
-                $this->runProcess('composer require laravel/breeze --dev');
-            } else {
-                $this->info('✅ Laravel Breeze already installed');
-            }
-        }
-
-        // Clear and rediscover commands to make breeze:install available
-        $this->call('config:clear');
-        $this->call('package:discover');
-
-        $breezeInstalled = false;
-
-        // Install Breeze with Blade (we'll modify for Bootstrap)
-        try {
-            $this->info('🎨 Setting up Breeze authentication...');
-
-            // Ensure CSS directory exists temporarily for Breeze installation
-            $cssPath = resource_path('css');
-            if (!$this->files->isDirectory($cssPath)) {
-                $this->files->ensureDirectoryExists($cssPath);
-                // Create a temporary CSS file for Breeze to copy over
-                $this->files->put(resource_path('css/app.css'), '/* Temporary file for Breeze installation */');
-            }
-
-            $this->call('breeze:install', ['stack' => 'blade', '--no-interaction' => true]);
-            $breezeInstalled = true;
-
-            $this->info('🔄 Replacing Tailwind with Bootstrap...');
-            // Remove Tailwind and install Bootstrap
-            $this->runProcess('npm uninstall tailwindcss postcss autoprefixer @tailwindcss/forms');
-            $this->runProcess('npm install bootstrap @popperjs/core');
-
-            // Replace Breeze authentication views with BS5 Kit Bootstrap versions
-            $this->info('🎨 Installing BS5 Kit Bootstrap authentication views...');
-
-            // Use guest-layout compatible versions for Breeze
-            $this->copyStub('auth/login-guest.blade.php', resource_path('views/auth/login.blade.php'));
-            $this->copyStub('auth/register-guest.blade.php', resource_path('views/auth/register.blade.php'));
-            $this->copyStub('auth/forgot-password.blade.php', resource_path('views/auth/forgot-password.blade.php'));
-            $this->copyStub('auth/reset-password.blade.php', resource_path('views/auth/reset-password.blade.php'));
-
-            // Install air-gapped guest layout (no external fonts)
-            $this->copyStub('layouts/guest.blade.php', resource_path('views/layouts/guest.blade.php'));
-
-            // Create auth-layout component for authentication views
-            $this->copyStub('layouts/auth.blade.php', resource_path('views/components/auth-layout.blade.php'));
-
-            // Install BS5 Kit Bootstrap components to replace Tailwind ones
-            $this->installBootstrapComponents();
-
-            // CRITICAL: Force replace app layout (Breeze overwrites it)
-            $this->info('🔄 Ensuring BS5 Kit app layout is properly installed...');
-            $this->copyStub('layouts/app.blade.php', resource_path('views/layouts/app.blade.php'));
-
-            $this->info('✅ Breeze configured with Bootstrap successfully');
-        } catch (\Exception $e) {
-            $this->warn('⚠️  Breeze installation encountered an issue.');
-            $this->warn('BS5 Kit will continue with its own authentication system.');
-            $this->comment('Note: Do not run "php artisan breeze:install" manually as it conflicts with BS5 Kit\'s SASS setup.');
-            $this->comment('If you need authentication, BS5 Kit provides its own complete authentication system.');
-            $breezeInstalled = false;
-        }
-
-        // ALWAYS install BS5 Kit components regardless of Breeze success/failure
         $this->info('🎨 Installing BS5 Kit Bootstrap authentication system...');
 
-        // Use guest-layout compatible versions for Breeze
-        $this->copyStub('auth/login-guest.blade.php', resource_path('views/auth/login.blade.php'));
-        $this->copyStub('auth/register-guest.blade.php', resource_path('views/auth/register.blade.php'));
+        // Install authentication views with Bootstrap styling
+        $this->copyStub('auth/login.blade.php', resource_path('views/auth/login.blade.php'));
+        $this->copyStub('auth/register.blade.php', resource_path('views/auth/register.blade.php'));
         $this->copyStub('auth/forgot-password.blade.php', resource_path('views/auth/forgot-password.blade.php'));
         $this->copyStub('auth/reset-password.blade.php', resource_path('views/auth/reset-password.blade.php'));
 
-        // Install air-gapped guest layout (no external fonts) - FORCE OVERWRITE
-        $this->info('🔄 Installing air-gapped guest layout...');
+        // Install guest layout for authentication pages
         $this->copyStub('layouts/guest.blade.php', resource_path('views/layouts/guest.blade.php'));
 
-        // Create auth-layout component for authentication views
-        $this->copyStub('layouts/auth.blade.php', resource_path('views/components/auth-layout.blade.php'));
+        // Install Bootstrap components
+        $this->installBootstrapComponents();
 
-        // CRITICAL: Force replace app layout (Breeze overwrites it)
+        // Ensure app layout is properly installed
         $this->info('🔄 Ensuring BS5 Kit app layout is properly installed...');
         $this->copyStub('layouts/app.blade.php', resource_path('views/layouts/app.blade.php'));
 
-        // CRITICAL: Install BS5 Kit Bootstrap components LAST to override Breeze Tailwind components
-        $this->info('🔄 Installing BS5 Kit Bootstrap components (overriding Breeze Tailwind)...');
-        $this->installBootstrapComponents();
+        // Add working authentication routes
+        $this->info('🔄 Adding authentication routes...');
+        $this->addAuthRoutes();
 
-        // CRITICAL: If Breeze didn't install properly, add our own working routes
-        if (!$breezeInstalled) {
-            $this->info('🔄 Adding working authentication routes (Breeze fallback)...');
-            $this->addAuthRoutes();
+        // Create dashboard and profile views
+        $this->copyStub('pages/dashboard.blade.php', resource_path('views/dashboard.blade.php'));
+        $this->copyStub('pages/profile.blade.php', resource_path('views/profile.blade.php'));
 
-            // Create dashboard and profile views
-            $this->copyStub('pages/dashboard.blade.php', resource_path('views/dashboard.blade.php'));
-            $this->copyStub('pages/profile.blade.php', resource_path('views/profile.blade.php'));
-        }
-
-        $this->info('✅ Complete authentication system installed');
+        $this->info('✅ BS5 Kit authentication system installed');
     }
 
     /**
