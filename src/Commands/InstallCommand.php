@@ -662,33 +662,28 @@ class InstallCommand extends Command
             return;
         }
 
+        // Use fully qualified class names to avoid import conflicts
         $routes = "
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use App\Models\User;
-
 // Authentication Routes (BS5 Starter Kit)
 Route::middleware('guest')->group(function () {
     Route::get('register', function () {
         return view('auth.register');
     })->name('register');
 
-    Route::post('register', function (Request \$request) {
+    Route::post('register', function (\Illuminate\Http\Request \$request) {
         \$request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
         ]);
 
-        \$user = User::create([
+        \$user = \App\Models\User::create([
             'name' => \$request->name,
             'email' => \$request->email,
-            'password' => Hash::make(\$request->password),
+            'password' => \Illuminate\Support\Facades\Hash::make(\$request->password),
         ]);
 
-        Auth::login(\$user);
+        \Illuminate\Support\Facades\Auth::login(\$user);
 
         return redirect('/dashboard');
     });
@@ -697,13 +692,13 @@ Route::middleware('guest')->group(function () {
         return view('auth.login');
     })->name('login');
 
-    Route::post('login', function (Request \$request) {
+    Route::post('login', function (\Illuminate\Http\Request \$request) {
         \$credentials = \$request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt(\$credentials, \$request->boolean('remember'))) {
+        if (\Illuminate\Support\Facades\Auth::attempt(\$credentials, \$request->boolean('remember'))) {
             \$request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
@@ -731,8 +726,8 @@ Route::middleware('auth')->group(function () {
         return view('profile');
     })->name('profile.edit');
 
-    Route::post('logout', function (Request \$request) {
-        Auth::logout();
+    Route::post('logout', function (\Illuminate\Http\Request \$request) {
+        \Illuminate\Support\Facades\Auth::logout();
         \$request->session()->invalidate();
         \$request->session()->regenerateToken();
         return redirect('/');
@@ -740,17 +735,7 @@ Route::middleware('auth')->group(function () {
 });
 ";
 
-        // Check if we need to add use statements at the top
-        if (strpos($existingContent, 'use Illuminate\Http\Request;') === false) {
-            // Find the opening <?php tag and add imports after it
-            $existingContent = str_replace(
-                "<?php\n\nuse Illuminate\Support\Facades\Route;",
-                "<?php\n\nuse Illuminate\Support\Facades\Route;\nuse Illuminate\Http\Request;\nuse Illuminate\Support\Facades\Auth;\nuse Illuminate\Support\Facades\Hash;\nuse Illuminate\Validation\Rules;\nuse App\Models\User;",
-                $existingContent
-            );
-        }
-
-        // Append the routes
+        // Simply append the routes without modifying use statements
         $this->files->put($routesPath, $existingContent . $routes);
 
         $this->info('✅ Complete authentication routes added to web.php');
