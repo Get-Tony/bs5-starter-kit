@@ -423,7 +423,7 @@ composer show get-tony/bs5-starter-kit
 
 ### Support Channels
 
-- **GitHub Issues**: [https://github.com/get-tony/bs5-starter-kit/issues](https://github.com/get-tony/bs5-starter-kit/issues)
+- **GitHub Issues**: [https://github.com/Get-Tony/bs5-starter-kit/issues](https://github.com/Get-Tony/bs5-starter-kit/issues)
 - **Email Support**: [get-tony@outlook.com](mailto:get-tony@outlook.com)
 
 ---
@@ -435,6 +435,7 @@ For additional help, check the [Usage Examples](usage-examples.md) or [Configura
 ### Issue: Seeing deprecation warnings during `npm run build`
 
 **Symptoms:**
+
 ```bash
 Deprecation Warning [import]: Sass @import rules are deprecated...
 Deprecation Warning [global-builtin]: Global built-in functions are deprecated...
@@ -445,6 +446,7 @@ Warning: 288 repetitive deprecation warnings omitted.
 These warnings come from Bootstrap 5's internal SASS code, not your project. Bootstrap 5 still uses the legacy `@import` syntax and older SASS functions that will be deprecated in SASS 3.0.
 
 **Why This Happens:**
+
 - **Bootstrap 5.3.x** hasn't migrated to the new `@use/@forward` SASS module system
 - **SASS 1.80+** shows deprecation warnings for legacy syntax
 - These are **dependency warnings**, not errors in your code
@@ -496,6 +498,7 @@ npm install --save-dev sass@1.77.8
 ```
 
 **Important Notes:**
+
 - ✅ **These warnings don't affect functionality**
 - ✅ **Your build will complete successfully**
 - ✅ **Bootstrap 6 will resolve these warnings**
@@ -503,6 +506,7 @@ npm install --save-dev sass@1.77.8
 
 **When to Worry:**
 Only worry if you see:
+
 - **Actual build failures** (not warnings)
 - **SASS errors** from your own code
 - **Missing CSS** in the final build

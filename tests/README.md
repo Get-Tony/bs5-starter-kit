@@ -45,11 +45,13 @@ vendor/bin/phpunit --coverage-html build/coverage
 ### Unit Tests
 
 **Service Provider Tests** (`tests/Unit/ServiceProviderTest.php`):
+
 - Service provider registration
 - Configuration merging
 - Command registration
 
 **Command Tests** (`tests/Unit/CommandsTest.php`):
+
 - Command signature validation
 - Command registration verification
 - Command description accuracy
@@ -57,11 +59,13 @@ vendor/bin/phpunit --coverage-html build/coverage
 ### Feature Tests
 
 **Install Command Tests** (`tests/Feature/InstallCommandTest.php`):
+
 - Preset installation (minimal, standard, full)
 - Individual component installation
 - Error handling and help messages
 
 **Publish Command Tests** (`tests/Feature/PublishCommandTest.php`):
+
 - Configuration publishing
 - Stub file publishing
 - Vendor publish integration
@@ -69,6 +73,7 @@ vendor/bin/phpunit --coverage-html build/coverage
 ### Integration Tests
 
 Real-world functionality validation:
+
 - Complete Laravel application creation
 - Package installation via Composer
 - Asset compilation and building
@@ -141,24 +146,28 @@ class TestCase extends Orchestra
 Current test coverage includes:
 
 ### Commands
+
 - ✅ `bs5:install` command with all presets
 - ✅ `bs5:publish` command with all options
 - ✅ Error handling and validation
 - ✅ Help and usage information
 
 ### Service Provider
+
 - ✅ Package registration
 - ✅ Configuration merging
 - ✅ Command registration
 - ✅ Publishable resources
 
 ### Installation Process
+
 - ✅ Bootstrap installation
 - ✅ SASS architecture setup
 - ✅ Authentication scaffolding
 - ✅ Asset compilation
 
 ### File Generation
+
 - ✅ JavaScript file creation
 - ✅ SASS file structure
 - ✅ Layout file generation
@@ -303,7 +312,7 @@ Tests run across:
 
 Check current test status:
 
-[![Tests](https://github.com/get-tony/bs5-starter-kit/workflows/tests/badge.svg)](https://github.com/get-tony/bs5-starter-kit/actions)
+[![Tests](https://github.com/Get-Tony/bs5-starter-kit/workflows/tests/badge.svg)](https://github.com/Get-Tony/bs5-starter-kit/actions)
 
 ---
 

@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Laravel](https://img.shields.io/badge/Laravel-10%2B%20%7C%2011%2B%20%7C%2012%2B-red.svg)](https://laravel.com)
 [![PHP](https://img.shields.io/badge/PHP-8.2%2B-blue.svg)](https://php.net)
-[![Version](https://img.shields.io/badge/Version-1.0.2%20Release-green.svg)](https://github.com/get-tony/bs5-starter-kit/releases/tag/v1.0.2)
+[![Version](https://img.shields.io/badge/Version-1.0.9%20Release-green.svg)](https://github.com/Get-Tony/bs5-starter-kit/releases/tag/v1.0.9)
 
 A modern, production-ready Laravel starter kit built exclusively with **Bootstrap 5** and **SASS architecture**. Clean, professional, and dependency-free.
 
@@ -119,31 +119,36 @@ php artisan bs5:install --auth
 ## 📖 Documentation
 
 ### 🎯 For Developers
+
 - **[Installation Guide](docs/installation.md)** - Complete installation options
 - **[Configuration](docs/configuration.md)** - Customize settings and behavior
 - **[Usage Examples](docs/usage-examples.md)** - Code examples and patterns
 - **[Customization](docs/customization.md)** - Extend and modify components
 
 ### 🌟 For Users & Community
-- **[GitHub Wiki](https://github.com/get-tony/bs5-starter-kit/wiki)** - Tutorials, examples, and community guides
-- **[Video Tutorials](https://github.com/get-tony/bs5-starter-kit/wiki/Video-Tutorials)** - Visual walkthroughs
-- **[Community Examples](https://github.com/get-tony/bs5-starter-kit/wiki/Community-Examples)** - User implementations
+
+- **[GitHub Wiki](https://github.com/Get-Tony/bs5-starter-kit/wiki)** - Tutorials, examples, and community guides
+- **[Video Tutorials](https://github.com/Get-Tony/bs5-starter-kit/wiki/Video-Tutorials)** - Visual walkthroughs
+- **[Community Examples](https://github.com/Get-Tony/bs5-starter-kit/wiki/Community-Examples)** - User implementations
 
 ## 🌟 Key Features
 
 ### ✅ Production Ready
+
 - Comprehensive test suite for quality assurance
 - Enterprise-grade authentication system
 - Professional UI components and layouts
 - Optimized asset compilation with Vite
 
 ### ⚡ Modern Stack
+
 - Bootstrap 5.3+ with latest features
 - SASS with 7-1 architecture
 - Modern JavaScript utilities
 - Laravel 10+, 11+, and 12+ support
 
 ### 🎯 Pure Bootstrap Foundation
+
 - No conflicting JavaScript frameworks
 - Clean, maintainable codebase
 - Professional enterprise styling
@@ -163,7 +168,7 @@ BS5 Starter Kit is open-sourced software licensed under the [MIT license](LICENS
 ## 🔗 Links
 
 - **[Packagist](https://packagist.org/packages/get-tony/bs5-starter-kit)** - Official package
-- **[GitHub](https://github.com/get-tony/bs5-starter-kit)** - Source code
+- **[GitHub](https://github.com/Get-Tony/bs5-starter-kit)** - Source code
 - **[Email Support](mailto:get-tony@outlook.com)** - Direct support
 
 ---

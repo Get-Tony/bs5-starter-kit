@@ -5,15 +5,18 @@ Welcome to the comprehensive documentation for **BS5 Starter Kit** - a pure Boot
 ## 📚 Quick Navigation
 
 ### 🚀 For Getting Started
+
 - **[Installation Guide](installation.md)** - Complete setup instructions and options
 - **[Usage Examples](usage-examples.md)** - Practical code examples and patterns
 
 ### ⚙️ For Developers
+
 - **[Configuration](configuration.md)** - Customize settings and behavior
 - **[Customization](customization.md)** - Extend and modify components
 - **[Troubleshooting](troubleshooting.md)** - Quality assurance and troubleshooting guides
 
 ### 🔧 For Advanced Users
+
 - **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
 
 ## 🎯 What is BS5 Starter Kit?
@@ -30,24 +33,28 @@ BS5 Starter Kit is a modern, production-ready Laravel starter kit built exclusiv
 ## 📖 Documentation Sections
 
 ### Installation & Setup
+
 - **Prerequisites** and system requirements
 - **Installation presets** (minimal, standard, full)
 - **Step-by-step setup** for new and existing projects
 - **Laravel vendor:publish** integration
 
 ### Configuration & Customization
+
 - **SASS customization** and variable overrides
 - **Component modification** and extension
 - **JavaScript utilities** and custom functionality
 - **Layout customization** and theming
 
 ### Components & Usage
+
 - **Bootstrap components** implementation and examples
 - **Authentication views** and user management
 - **Layout system** and page structure
 - **Best practices** and coding patterns
 
 ### Quality Assurance
+
 - **Troubleshooting** common issues and solutions
 - **Quality standards** and code validation
 - **Performance** optimization tips
@@ -68,7 +75,7 @@ npm install && npm run build
 
 ## 📞 Support & Resources
 
-- **[GitHub Repository](https://github.com/get-tony/bs5-starter-kit)** - Source code and issues
+- **[GitHub Repository](https://github.com/Get-Tony/bs5-starter-kit)** - Source code and issues
 - **[Packagist](https://packagist.org/packages/get-tony/bs5-starter-kit)** - Package information
 - **Email Support**: [get-tony@outlook.com](mailto:get-tony@outlook.com)
 
