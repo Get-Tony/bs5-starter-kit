@@ -672,17 +672,23 @@ class InstallCommand extends Command
 
         $packageJson = json_decode($this->files->get($packageJsonPath), true);
 
-        // Add/update scripts
+        // Add/update scripts with build helper
         $packageJson['scripts'] = array_merge($packageJson['scripts'] ?? [], [
-            'bal:dev' => 'vite',
-            'bal:build' => 'vite build',
-            'bal:preview' => 'vite preview',
+            'build' => 'node resources/js/build-helper.js',
+            'dev' => 'node resources/js/build-helper.js --dev',
+            'build:raw' => 'vite build',
+            'dev:raw' => 'vite',
+            'build:verbose' => 'vite build --mode development',
+            'preview' => 'vite preview',
         ]);
 
         $this->files->put(
             $packageJsonPath,
             json_encode($packageJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
         );
+
+        // Copy build helper script
+        $this->copyStub('js/build-helper.js', resource_path('js/build-helper.js'));
 
         $this->info('📄 Updated package.json');
     }

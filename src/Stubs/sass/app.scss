@@ -1,6 +1,15 @@
 // BS5 Starter Kit - Main SASS Entry Point
 // Bootstrap 5 Toolkit
 
+// =============================================================================
+// SASS DEPRECATION NOTICE
+// =============================================================================
+// The @import statements below generate deprecation warnings in SASS 1.80+
+// These warnings are primarily from Bootstrap 5's internal code, not this kit.
+// Bootstrap 6 will resolve these when it adopts the new @use/@forward syntax.
+// The warnings do not affect functionality and can be safely ignored.
+// =============================================================================
+
 // 1. Configuration and helpers
 @import 'abstracts/variables';
 @import 'abstracts/functions';

@@ -429,3 +429,83 @@ composer show get-tony/bs5-starter-kit
 ---
 
 For additional help, check the [Usage Examples](usage-examples.md) or [Configuration Guide](configuration.md).
+
+## SASS Deprecation Warnings
+
+### Issue: Seeing deprecation warnings during `npm run build`
+
+**Symptoms:**
+```bash
+Deprecation Warning [import]: Sass @import rules are deprecated...
+Deprecation Warning [global-builtin]: Global built-in functions are deprecated...
+Warning: 288 repetitive deprecation warnings omitted.
+```
+
+**Explanation:**
+These warnings come from Bootstrap 5's internal SASS code, not your project. Bootstrap 5 still uses the legacy `@import` syntax and older SASS functions that will be deprecated in SASS 3.0.
+
+**Why This Happens:**
+- **Bootstrap 5.3.x** hasn't migrated to the new `@use/@forward` SASS module system
+- **SASS 1.80+** shows deprecation warnings for legacy syntax
+- These are **dependency warnings**, not errors in your code
+
+**Solutions:**
+
+#### ✅ Recommended: Use BS5 Kit's Smart Build Scripts
+
+BS5 Starter Kit includes intelligent build scripts that filter these warnings:
+
+```bash
+# Clean build output (warnings filtered)
+npm run build
+npm run dev
+
+# See all warnings (verbose mode)
+npm run build:verbose
+npm run build:raw
+```
+
+#### ✅ Manual Vite Configuration
+
+If you need custom configuration, update your `vite.config.js`:
+
+```javascript
+export default defineConfig({
+    css: {
+        preprocessorOptions: {
+            scss: {
+                api: 'modern-compiler',
+                quietDeps: true, // Suppress dependency warnings
+                silenceDeprecations: [
+                    'import',
+                    'global-builtin',
+                    'color-functions'
+                ]
+            }
+        }
+    }
+});
+```
+
+#### ✅ Alternative: Use Legacy SASS
+
+If warnings become problematic, temporarily use SASS 1.77.x:
+
+```bash
+npm install --save-dev sass@1.77.8
+```
+
+**Important Notes:**
+- ✅ **These warnings don't affect functionality**
+- ✅ **Your build will complete successfully**
+- ✅ **Bootstrap 6 will resolve these warnings**
+- ❌ **Don't modify Bootstrap's SASS files directly**
+
+**When to Worry:**
+Only worry if you see:
+- **Actual build failures** (not warnings)
+- **SASS errors** from your own code
+- **Missing CSS** in the final build
+
+**Future Resolution:**
+Bootstrap 6 will adopt the modern SASS module system and eliminate these warnings.
