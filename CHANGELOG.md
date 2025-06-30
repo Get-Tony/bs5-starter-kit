@@ -5,6 +5,18 @@ All notable changes to BS5 Starter Kit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-06-30
+
+### Fixed
+- 🔧 **Critical ES Module Fix** - Convert build helper script from CommonJS to ES module syntax
+- ❌ **Build Error Resolution** - Fix "require is not defined" error in ES module environments
+- ⚡ **Node.js Compatibility** - Support modern Node.js setups with package.json "type": "module"
+
+### Technical Details
+- **Breaking Issue**: Build helper used `require()` syntax but package.json specified ES modules
+- **Resolution**: Convert to `import` statements for full ES module compatibility
+- **Impact**: Fixes immediate build failures in fresh Laravel installations
+
 ## [1.0.1] - 2025-06-30
 
 ### Added
