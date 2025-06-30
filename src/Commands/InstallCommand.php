@@ -582,6 +582,19 @@ class InstallCommand extends Command
             return;
         }
 
+        // First, check if we need to replace the existing root route
+        $homeRoutePattern = '/Route::get\(\s*\'\/\'\s*,\s*function\s*\(\)\s*{[^}]*}\s*\);/';
+        if (preg_match($homeRoutePattern, $existingContent)) {
+            // Replace existing root route with auth-aware version
+            $newHomeRoute = "Route::get('/', function () {
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        return redirect('/dashboard');
+    }
+    return view('welcome');
+});";
+            $existingContent = preg_replace($homeRoutePattern, $newHomeRoute, $existingContent);
+        }
+
         // Use fully qualified class names to avoid import conflicts
         $routes = "
 // Authentication Routes (BS5 Starter Kit)
@@ -660,6 +673,7 @@ Route::middleware('auth')->group(function () {
 
         $this->info('✅ Complete authentication routes added to web.php');
         $this->info('🎯 Login and Register links will now appear in navigation');
+        $this->info('🏠 Home route updated to redirect authenticated users to dashboard');
         $this->comment('Note: Dashboard and profile views will be created automatically');
     }
 
