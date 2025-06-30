@@ -3,10 +3,11 @@
 namespace LaravelBs5Kit\Tests\Feature;
 
 use LaravelBs5Kit\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class PublishCommandTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_can_list_vendor_publish_options()
     {
         $this->artisan('bs5:publish --list')
@@ -14,7 +15,7 @@ class PublishCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_publish_config()
     {
         $this->artisan('bs5:publish --config')
@@ -22,7 +23,7 @@ class PublishCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_publish_stubs()
     {
         $this->artisan('bs5:publish --stubs')
@@ -30,21 +31,21 @@ class PublishCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_run_publish_command_with_components_option()
     {
         $this->artisan('bs5:publish --components')
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_run_publish_command_with_all_option()
     {
         $this->artisan('bs5:publish --all')
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_shows_help_when_no_options_provided()
     {
         $this->artisan('bs5:publish')
@@ -52,7 +53,7 @@ class PublishCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_force_overwrite_published_files()
     {
         // First publish
@@ -64,14 +65,14 @@ class PublishCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_publish_multiple_options_together()
     {
         $this->artisan('bs5:publish --config --stubs')
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function vendor_publish_works_with_bal_kit_tags()
     {
         // Test that Laravel's vendor:publish command works with our tags
@@ -79,7 +80,7 @@ class PublishCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function vendor_publish_works_with_provider()
     {
         // Test that Laravel's vendor:publish command works with our provider
@@ -87,7 +88,7 @@ class PublishCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_individual_tag_publishing()
     {
         // Test individual tags
@@ -107,7 +108,7 @@ class PublishCommandTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_can_publish_all_available_options()
     {
         $options = ['config', 'stubs', 'components'];
@@ -118,7 +119,7 @@ class PublishCommandTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_force_option_correctly()
     {
         // Test force option with different combinations
@@ -129,14 +130,14 @@ class PublishCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_publish_all_resources()
     {
         $this->artisan('vendor:publish --provider=LaravelBs5Kit\Bs5KitServiceProvider')
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_shows_correct_vendor_publish_tags()
     {
         $tags = [

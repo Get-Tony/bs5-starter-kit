@@ -4,6 +4,7 @@ namespace LaravelBs5Kit\Tests\Feature;
 
 use LaravelBs5Kit\Tests\TestCase;
 use Illuminate\Support\Facades\File;
+use PHPUnit\Framework\Attributes\Test;
 
 class InstallCommandTest extends TestCase
 {
@@ -21,7 +22,7 @@ class InstallCommandTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function it_can_install_minimal_preset()
     {
         $this->artisan('bs5:install --preset=minimal')
@@ -29,7 +30,7 @@ class InstallCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_install_standard_preset()
     {
         $this->artisan('bs5:install --preset=standard')
@@ -37,7 +38,7 @@ class InstallCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_install_individual_components()
     {
         $this->artisan('bs5:install --bootstrap')
@@ -45,7 +46,7 @@ class InstallCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
-    /** @test */
+    #[Test]
     public function it_shows_help_when_no_options_provided()
     {
         $this->artisan('bs5:install')

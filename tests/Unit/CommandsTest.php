@@ -5,10 +5,11 @@ namespace LaravelBs5Kit\Tests\Unit;
 use LaravelBs5Kit\Tests\TestCase;
 use LaravelBs5Kit\Commands\InstallCommand;
 use LaravelBs5Kit\Commands\PublishCommand;
+use PHPUnit\Framework\Attributes\Test;
 
 class CommandsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function install_command_has_correct_signature()
     {
         $command = $this->app->make(InstallCommand::class);
@@ -17,7 +18,7 @@ class CommandsTest extends TestCase
         $this->assertStringContainsString('Install BS5 Starter Kit', $command->getDescription());
     }
 
-    /** @test */
+    #[Test]
     public function install_command_has_preset_options()
     {
         $command = $this->app->make(InstallCommand::class);
@@ -30,7 +31,7 @@ class CommandsTest extends TestCase
         $this->assertTrue($definition->hasOption('force'));
     }
 
-    /** @test */
+    #[Test]
     public function publish_command_has_correct_signature()
     {
         $command = $this->app->make(PublishCommand::class);
@@ -39,7 +40,7 @@ class CommandsTest extends TestCase
         $this->assertStringContainsString('Publish BS5 Starter Kit', $command->getDescription());
     }
 
-    /** @test */
+    #[Test]
     public function publish_command_has_publish_options()
     {
         $command = $this->app->make(PublishCommand::class);
@@ -53,14 +54,14 @@ class CommandsTest extends TestCase
         $this->assertTrue($definition->hasOption('force'));
     }
 
-    /** @test */
+    #[Test]
     public function commands_are_registered()
     {
         $this->assertTrue(array_key_exists('bs5:install', $this->app['Illuminate\Contracts\Console\Kernel']->all()));
         $this->assertTrue(array_key_exists('bs5:publish', $this->app['Illuminate\Contracts\Console\Kernel']->all()));
     }
 
-    /** @test */
+    #[Test]
     public function install_command_validates_preset_names()
     {
         // This would require more complex testing with actual command execution
@@ -69,7 +70,7 @@ class CommandsTest extends TestCase
         $this->assertInstanceOf(InstallCommand::class, $command);
     }
 
-    /** @test */
+    #[Test]
     public function publish_command_can_list_options()
     {
         $command = $this->app->make(PublishCommand::class);

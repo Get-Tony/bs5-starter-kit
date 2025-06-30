@@ -6,35 +6,36 @@ use LaravelBs5Kit\Tests\TestCase;
 use LaravelBs5Kit\Bs5KitServiceProvider;
 use LaravelBs5Kit\Commands\InstallCommand;
 use LaravelBs5Kit\Commands\PublishCommand;
+use PHPUnit\Framework\Attributes\Test;
 
 class ServiceProviderTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_registers_the_service_provider()
     {
         $this->assertTrue($this->app->getProvider(Bs5KitServiceProvider::class) instanceof Bs5KitServiceProvider);
     }
 
-    /** @test */
+    #[Test]
     public function it_registers_install_command()
     {
         $this->assertTrue($this->app->make(InstallCommand::class) instanceof InstallCommand);
     }
 
-    /** @test */
+    #[Test]
     public function it_registers_publish_command()
     {
         $this->assertTrue($this->app->make(PublishCommand::class) instanceof PublishCommand);
     }
 
-    /** @test */
+    #[Test]
     public function it_merges_configuration()
     {
         $this->assertIsArray(config('bs5-kit'));
         $this->assertArrayHasKey('bootstrap', config('bs5-kit.install'));
     }
 
-    /** @test */
+    #[Test]
     public function it_has_correct_preset_configurations()
     {
         $config = $this->app['config']->get('bs5-kit.presets');
@@ -45,7 +46,7 @@ class ServiceProviderTest extends TestCase
         $this->assertArrayHasKey('full', $config);
     }
 
-    /** @test */
+    #[Test]
     public function it_registers_service_provider()
     {
         // Test that the service provider is loaded
@@ -53,14 +54,14 @@ class ServiceProviderTest extends TestCase
         $this->assertArrayHasKey('LaravelBs5Kit\Bs5KitServiceProvider', $providers);
     }
 
-    /** @test */
+    #[Test]
     public function it_uses_correct_namespace()
     {
         $reflection = new \ReflectionClass('LaravelBs5Kit\Bs5KitServiceProvider');
         $this->assertEquals('LaravelBs5Kit', $reflection->getNamespaceName());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_resolve_commands_from_container()
     {
         // Test that we can resolve the command classes
