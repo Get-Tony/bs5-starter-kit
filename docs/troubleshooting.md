@@ -325,6 +325,36 @@ npm run preview
 
 ## 🧪 Testing Issues
 
+### PHPUnit Deprecation Warnings
+
+**Problem**: PHPUnit shows deprecation warnings like "Metadata found in doc-comment... deprecated".
+
+**Solution**: This has been fixed in BS5 Starter Kit v1.1.0+. All tests now use modern PHPUnit 11+ syntax:
+
+```php
+// ✅ Modern syntax (v1.1.0+)
+use PHPUnit\Framework\Attributes\Test;
+
+class ExampleTest extends TestCase
+{
+    #[Test]
+    public function it_can_do_something()
+    {
+        // Test implementation
+    }
+}
+
+// ❌ Deprecated syntax (removed in v1.1.0)
+class OldTest extends TestCase
+{
+    /** @test */
+    public function it_can_do_something()
+    {
+        // This causes deprecation warnings
+    }
+}
+```
+
 ### Tests Not Running
 
 **Problem**: PHPUnit tests fail to execute.
@@ -340,6 +370,33 @@ vendor/bin/phpunit --verbose
 
 # Check test configuration
 cat phpunit.xml
+
+# Run specific test suites
+vendor/bin/phpunit --testsuite=Feature
+vendor/bin/phpunit --testsuite=Unit
+```
+
+### Test Suite Not Found
+
+**Problem**: Error "Cannot find test suite 'Feature'" or similar.
+
+**Solution**: Ensure `phpunit.xml` exists with proper configuration:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true">
+    <testsuites>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
 ```
 
 ### Test Environment Issues
@@ -359,6 +416,25 @@ class TestCase extends Orchestra
         ];
     }
 }
+```
+
+### Local Test Script Failures
+
+**Problem**: `./scripts/testing/local-test.sh` fails.
+
+**Solutions**:
+
+```bash
+# Make script executable
+chmod +x scripts/testing/local-test.sh
+
+# Run with specific test type
+scripts/testing/local-test.sh phpunit
+
+# Check script requirements
+# - PHP 8.2+
+# - Composer 2.0+
+# - Node.js 18+
 ```
 
 ## 📊 Debugging Tips

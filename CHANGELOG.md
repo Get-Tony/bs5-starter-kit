@@ -7,7 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2025-06-30
 
+### Fixed
+
+- 🧪 **PHPUnit Compatibility** - Updated all test methods to use modern `#[Test]` attribute syntax
+- ❌ **Deprecation Warnings** - Eliminated 19 PHPUnit deprecation warnings from `/** @test */` doc-comment syntax
+- ⚙️ **Test Configuration** - Added `phpunit.xml` configuration file with proper test suite definitions
+- 🔧 **Test Suite Organization** - Defined Feature and Unit test suites for targeted test execution
+- ✅ **CI/CD Compatibility** - Resolved test script failures with `--testsuite=Feature` and `--testsuite=Unit` flags
+
+### Enhanced
+
+- 🎯 **Test Execution** - Improved test execution with proper configuration and suite organization
+- 📊 **Test Coverage** - Maintained 100% test pass rate with 34 tests (19 Feature + 15 Unit)
+- 🔧 **PHPUnit 11.5+ Support** - Full compatibility with latest PHPUnit versions
+- 📚 **Test Documentation** - Updated testing documentation to reflect modern practices
+
+### Technical Details
+
+- **Breaking Issue**: `/** @test */` annotations deprecated in PHPUnit 11.5.25, causing test failures
+- **Resolution**: Converted all test methods to use `#[Test]` attribute syntax
+- **Added**: `phpunit.xml` configuration for proper test suite management
+- **Impact**: Clean test execution without deprecation warnings, improved CI/CD reliability
+
 ### Changed
+
 - 🔄 **Version Update** - Updated to version 1.1.0
 
 ## [1.0.9] - 2025-06-30

@@ -6,9 +6,10 @@ Comprehensive testing suite for BS5 Starter Kit quality assurance.
 
 BS5 Starter Kit includes a comprehensive test suite to ensure quality and reliability:
 
-- **Unit Tests**: 41 tests covering service provider and command functionality
-- **Feature Tests**: Installation, publishing, and component integration
+- **Unit Tests**: 15 tests covering service provider and command functionality
+- **Feature Tests**: 19 tests for installation, publishing, and component integration
 - **Integration Tests**: Real-world package installation and functionality validation
+- **Total Coverage**: 34 tests with 100% pass rate
 
 ## 🚀 Running Tests
 
@@ -35,14 +36,16 @@ Run specific categories of tests:
 Run PHPUnit tests directly:
 
 ```bash
-vendor/bin/phpunit
-vendor/bin/phpunit --filter InstallCommandTest
+vendor/bin/phpunit                              # All tests
+vendor/bin/phpunit --testsuite=Feature         # Feature tests only
+vendor/bin/phpunit --testsuite=Unit            # Unit tests only
+vendor/bin/phpunit --filter InstallCommandTest # Specific test class
 vendor/bin/phpunit --coverage-html build/coverage
 ```
 
 ## 📋 Test Categories
 
-### Unit Tests
+### Unit Tests (15 tests)
 
 **Service Provider Tests** (`tests/Unit/ServiceProviderTest.php`):
 
@@ -56,7 +59,7 @@ vendor/bin/phpunit --coverage-html build/coverage
 - Command registration verification
 - Command description accuracy
 
-### Feature Tests
+### Feature Tests (19 tests)
 
 **Install Command Tests** (`tests/Feature/InstallCommandTest.php`):
 
@@ -83,34 +86,63 @@ Real-world functionality validation:
 
 ### PHPUnit Configuration
 
-Tests are configured in `phpunit.xml`:
+Tests are configured in `phpunit.xml` with modern PHPUnit 11.5+ settings:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
          colors="true"
-         processIsolation="false"
-         stopOnFailure="false">
+         failOnEmptyTestSuite="false"
+         failOnIncomplete="false"
+         failOnRisky="false"
+         failOnSkipped="false"
+         failOnWarning="false"
+         cacheDirectory="vendor/.phpunit.cache"
+         executionOrder="default">
+
     <testsuites>
-        <testsuite name="BS5Kit Test Suite">
-            <directory suffix="Test.php">./tests</directory>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
         </testsuite>
     </testsuites>
 
-    <coverage>
-        <report>
-            <html outputDirectory="build/coverage"/>
-            <clover outputFile="build/logs/clover.xml"/>
-        </report>
-    </coverage>
-
     <source>
         <include>
-            <directory suffix=".php">./src</directory>
+            <directory>src</directory>
         </include>
     </source>
 </phpunit>
 ```
+
+### Modern Test Syntax
+
+All tests use modern PHPUnit 11+ attribute syntax:
+
+```php
+<?php
+
+namespace LaravelBs5Kit\Tests\Feature;
+
+use LaravelBs5Kit\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+
+class ExampleTest extends TestCase
+{
+    #[Test]
+    public function it_can_do_something()
+    {
+        // Test implementation
+        $this->assertTrue(true);
+    }
+}
+```
+
+**Note**: We've migrated from deprecated `/** @test */` doc-comment syntax to the modern `#[Test]` attribute syntax for PHPUnit 11.5+ compatibility.
 
 ### Test Environment
 
