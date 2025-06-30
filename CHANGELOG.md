@@ -5,6 +5,25 @@ All notable changes to BS5 Starter Kit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-06-30
+
+### Added
+- 🔇 **Smart SASS Warning Suppression** - Intelligent filtering of Bootstrap deprecation warnings
+- 🎯 **User-friendly Build Scripts** - Clean build output with explanatory messages
+- 🛠️ **Build Helper Script** - Automated warning filtering with professional feedback
+- 📚 **SASS Warning Documentation** - Comprehensive troubleshooting guide
+
+### Enhanced
+- ⚡ **Vite Configuration** - Advanced SASS settings with `quietDeps` and `silenceDeprecations`
+- 📋 **NPM Scripts** - Multiple build modes: `build`, `dev`, `build:raw`, `build:verbose`
+- 🎨 **User Experience** - Clear explanation of Bootstrap 5 vs SASS compatibility issues
+- 📖 **Documentation** - Added troubleshooting section for SASS deprecation warnings
+
+### Technical
+- 🔧 **Warning Filtering** - Suppress Bootstrap's internal SASS deprecation warnings while preserving user code warnings
+- 🎛️ **Build Options** - Clean mode for production, verbose mode for debugging
+- 📝 **Educational** - Explains that warnings come from Bootstrap 5's legacy SASS code, not user project
+
 ## [1.0.0] - 2025-01-15
 
 ### Added

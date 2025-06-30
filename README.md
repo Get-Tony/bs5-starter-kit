@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Laravel](https://img.shields.io/badge/Laravel-10%2B%20%7C%2011%2B%20%7C%2012%2B-red.svg)](https://laravel.com)
 [![PHP](https://img.shields.io/badge/PHP-8.2%2B-blue.svg)](https://php.net)
-[![Version](https://img.shields.io/badge/Version-1.0.0%20Release-green.svg)](https://github.com/get-tony/bs5-starter-kit/releases/tag/v1.0.0)
+[![Version](https://img.shields.io/badge/Version-1.0.1%20Release-green.svg)](https://github.com/get-tony/bs5-starter-kit/releases/tag/v1.0.1)
 
 A modern, production-ready Laravel starter kit built exclusively with **Bootstrap 5** and **SASS architecture**. Clean, professional, and dependency-free.
 
