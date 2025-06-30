@@ -28,6 +28,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/') }}">Home</a>
                         </li>
+                        @auth
+                            @if (Route::has('dashboard'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                                </li>
+                            @endif
+                        @endauth
                         <li class="nav-item">
                             <a class="nav-link" href="#">About</a>
                         </li>
@@ -43,15 +50,24 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu">
+                                    @if (Route::has('dashboard'))
+                                        <li><a class="dropdown-item" href="{{ route('dashboard') }}">
+                                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                        </a></li>
+                                    @endif
                                     @if (Route::has('profile.edit'))
-                                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                            <i class="fas fa-user me-2"></i>Profile
+                                        </a></li>
                                         <li><hr class="dropdown-divider"></li>
                                     @endif
                                     @if (Route::has('logout'))
                                         <li>
                                             <form method="POST" action="{{ route('logout') }}">
                                                 @csrf
-                                                <button type="submit" class="dropdown-item">Logout</button>
+                                                <button type="submit" class="dropdown-item">
+                                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                                </button>
                                             </form>
                                         </li>
                                     @endif
