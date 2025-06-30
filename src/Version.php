@@ -10,7 +10,7 @@ class Version
     /**
      * The current version of BS5 Starter Kit.
      */
-    public const VERSION = '1.0.9';
+    public const VERSION = '1.1.0';
 
     /**
      * The release date.

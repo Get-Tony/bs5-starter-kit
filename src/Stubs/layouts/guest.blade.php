@@ -21,7 +21,11 @@
 
                     <div class="text-center mt-4">
                         <small class="text-muted">
-                            Powered by <span class="text-primary fw-semibold">BS5 Starter Kit</span>
+                            Powered by <a href="https://github.com/Get-Tony/bs5-starter-kit"
+                                          target="_blank"
+                                          class="text-primary fw-semibold text-decoration-none">
+                                          BS5 Starter Kit
+                                       </a>
                         </small>
                     </div>
                 </div>

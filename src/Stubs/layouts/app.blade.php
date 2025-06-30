@@ -146,7 +146,11 @@
                     <div class="col-md-6 text-md-end">
                         <small class="text-muted">
                             Built with <span class="text-danger">&hearts;</span> using
-                            <span class="text-primary fw-semibold">BS5 Starter Kit</span>
+                            <a href="https://github.com/Get-Tony/bs5-starter-kit"
+                               target="_blank"
+                               class="text-primary fw-semibold text-decoration-none">
+                               BS5 Starter Kit
+                            </a>
                         </small>
                     </div>
                 </div>
