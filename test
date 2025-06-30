@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# BS5 Starter Kit Test Wrapper
+# Convenient access to local testing functionality
+
+# Forward all arguments to the local testing script
+exec "$(dirname "$0")/scripts/testing/local-test.sh" "$@"

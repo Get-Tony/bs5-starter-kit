@@ -1,0 +1,65 @@
+{
+    "name": "get-tony/bs5-starter-kit",
+    "description": "Complete Bootstrap 5 starter kit for Laravel - Professional UI components, SASS architecture, and authentication system. Perfect for enterprise and secure environments.",
+    "keywords": [
+        "laravel",
+        "bootstrap",
+        "bootstrap5",
+        "sass",
+        "kit",
+        "ui",
+        "components",
+        "starter",
+        "frontend",
+        "enterprise",
+        "secure",
+        "authentication",
+        "responsive"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anthony Pagan",
+            "email": "get-tony@outlook.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/console": "^10.0|^11.0|^12.0",
+        "illuminate/filesystem": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "symfony/process": "^6.0|^7.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.22",
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelBs5Kit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelBs5Kit\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelBs5Kit\\Bs5KitServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "homepage": "https://github.com/get-tony/bs5-starter-kit",
+    "support": {
+        "issues": "https://github.com/get-tony/bs5-starter-kit/issues",
+        "source": "https://github.com/get-tony/bs5-starter-kit"
+    }
+}

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# BS5 Starter Kit Version Wrapper
+# Convenient access to version management functionality
+
+# Forward all arguments to the version helper script
+exec php "$(dirname "$0")/scripts/version/version.php" "$@"
